@@ -1,5 +1,6 @@
 package dell.ead.oficina_aula1;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,14 +10,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button mButtonAction;
+    private Button mButtonClean;
     private ListView mListView;
+    private TextView progressMessage;
     private LinearLayout areaProgressBar;
     private ProgressBar mProgressBar;
     ArrayList<String> listaPedidos = new ArrayList<>();
@@ -28,9 +34,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mButtonAction = findViewById(R.id.buttonAction);
+        mButtonClean = findViewById(R.id.buttonClean);
         areaProgressBar = findViewById(R.id.area_progressbar);
-        mProgressBar = findViewById(R.id.barra_progresso);
+        mProgressBar = findViewById(R.id.progressBar);
+        progressMessage = findViewById(R.id.progressMessage);
+
         setButtonUpdateList();
+
     }
 
     public void setListViewTask(){
@@ -42,18 +52,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setButtonUpdateList(){
-        setButtonMessage(R.string.atualizar_pedidos);
+        mButtonAction.setText(R.string.atualizar_pedidos);
+        mButtonAction.setVisibility(View.VISIBLE);
         mButtonAction.setOnClickListener(view -> setListViewTask());
     }
 
-    //TODO Fazer botão de limpar lista
+    public void disableUpdateButton(){
+        mButtonAction.setVisibility(View.GONE);
+    }
 
-    public void setButtonMessage(int message){
-        mButtonAction.setText(message);
+
+    public void setButtonDeleteList(){
+        mButtonClean.setText(R.string.limpar_pedidos);
+        mButtonClean.setVisibility(View.VISIBLE);
+        mButtonClean.setOnClickListener(view -> setConfimationAlert());
+    }
+
+    public void disableCleanButton(){
+        mButtonClean.setVisibility(View.GONE);
+    }
+
+    public void cleanList (){
+        listaPedidos.removeAll(listaPedidos);
+        mListView.setVisibility(View.GONE);
+    }
+
+    public void setConfimationAlert(){
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.atention)
+                .setMessage(R.string.alertMessage)
+                .setCancelable(false)
+                .setPositiveButton(R.string.confirm, (dialog, which) -> {
+                    cleanList();
+                    disableCleanButton();
+                    setButtonUpdateList();
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+
+                })
+                .show();
     }
 
 
     class PedidosAsyncTask extends AsyncTask<Integer, Integer, ArrayList<String>> {
+
+        private DecimalFormat decimalFormat;
+
+        public PedidosAsyncTask(){
+            decimalFormat = new DecimalFormat("#");
+        }
 
         @Override
         protected void onPreExecute() {
@@ -65,37 +112,43 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<String> doInBackground(Integer... integers) {
 
             int quantidadePedidos = integers[0];
+            mProgressBar.setMax(quantidadePedidos);
 
+            /* A criação da lista de pedidos leva um tempo, também aleatório,
+            que pode ser imediato (quando a lista criada não possui pedidos) ou até cerca de 20 segundos
+            (no pior caso, com 10 pedidos, custando 2 segundos cada para ser criado)*/
 
             for (int i = 1; i < quantidadePedidos; i++) {
                 listaPedidos.add("Pedido "+i);
-                publishProgress(i);
+                try {
+                    publishProgress(i);
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            //TODO ajustar para quando a lista for vazia
             if (quantidadePedidos<=1)
                 listaPedidos.add("Nenhum pedido para atualizar");
-
-            try {
-                Thread.sleep(quantidadePedidos*2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             return listaPedidos;
         }
 
         @Override
-        //TODO Configurar barra de progresso ou spinner
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
+            disableUpdateButton();
             mProgressBar.setProgress(values[0]);
+            float progresso = (float) mProgressBar.getProgress()/mProgressBar.getMax();
+            progressMessage.setText("Atualizando lista, por favor aguarde... " + decimalFormat.format(progresso*100)+ "%");
         }
 
         @Override
         protected void onPostExecute(ArrayList<String> s) {
             super.onPostExecute(s);
+            mProgressBar.getMax();
             areaProgressBar.setVisibility(View.INVISIBLE);
             mListView = findViewById(R.id.listViewOrder);
+            mListView.setVisibility(View.VISIBLE);
             mAdapter = new ArrayAdapter<>(
                     getApplicationContext(),
                     R.layout.lista_pedidos,
@@ -103,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
                     listaPedidos
             );
             mListView.setAdapter(mAdapter);
+            disableUpdateButton();
+            setButtonDeleteList();
         }
     }
 }

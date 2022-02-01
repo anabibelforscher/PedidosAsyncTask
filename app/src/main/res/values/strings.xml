@@ -3,4 +3,8 @@
     <string name="lista_de_pedidos">Lista de Pedidos:</string>
     <string name="atualizar_pedidos">Atualizar Pedidos</string>
     <string name="limpar_pedidos">Limpar pedidos</string>
+    <string name="atention">Atenção</string>
+    <string name="alertMessage">Deseja limpar lista de pedidos?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

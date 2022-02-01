@@ -13,9 +13,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/lista_de_pedidos"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <ListView
@@ -26,19 +27,51 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLista"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/textViewLista"
+        android:visibility="gone"></ListView>
 
-    <Button
-        android:id="@+id/buttonAction"
-        android:layout_width="160dp"
+
+    <LinearLayout
+        android:id="@+id/buttonArea"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/rounded_corner"
-        android:drawableEnd="@drawable/order"
-        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewOrder" />
+        app:layout_constraintTop_toBottomOf="@+id/listViewOrder">
+
+        <Button
+            android:id="@+id/buttonAction"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_corner"
+            android:drawableEnd="@drawable/order"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listViewOrder"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/buttonClean"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_corner"
+            android:drawableEnd="@drawable/clean"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listViewOrder"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/area_progressbar"
@@ -48,24 +81,26 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAction"
+        app:layout_constraintTop_toBottomOf="@+id/buttonArea"
         android:visibility="invisible"
         tools:visibility="visible" >
 
         <TextView
-            android:id="@+id/msg_progresso"
+            android:id="@+id/progressMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ProgressBar
-            android:id="@+id/barra_progresso"
-            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:layout_marginTop="20dp"
-            android:padding="16dp"
-            android:layout_margin="16dp" />
+            android:padding="16dp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

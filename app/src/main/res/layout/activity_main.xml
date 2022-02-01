@@ -49,7 +49,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAction"
-        android:visibility="invisible" >
+        android:visibility="invisible"
+        tools:visibility="visible" >
 
         <TextView
             android:id="@+id/msg_progresso"
@@ -63,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:visibility="visible" />
+            android:padding="16dp"
+            android:layout_margin="16dp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

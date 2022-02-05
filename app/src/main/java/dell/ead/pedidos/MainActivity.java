@@ -1,4 +1,4 @@
-package dell.ead.oficina_aula1;
+package dell.ead.pedidos;
 
 import android.app.AlertDialog;
 import android.os.AsyncTask;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {

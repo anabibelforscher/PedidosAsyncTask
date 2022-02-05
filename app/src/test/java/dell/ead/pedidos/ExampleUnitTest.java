@@ -1,4 +1,4 @@
-package dell.ead.oficina_aula1;
+package dell.ead.pedidos;
 
 import org.junit.Test;
 

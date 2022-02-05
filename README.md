@@ -1,4 +1,4 @@
-<h2> Geração de pedidos através de AsyncTask</h2>
+<h2> Simulador de geração de pedidos através de AsyncTask</h2>
 
  💎 O objetivo principal desse projeto foi aplicar os conceitos de threads no desenvolvimento Java Android, através da utilização de AsynTask para uma atividade avaliativa.
  

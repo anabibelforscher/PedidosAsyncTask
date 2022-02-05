@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Oficina_Aula1</string>
+    <string name="app_name">Relatório de pedidos</string>
     <string name="lista_de_pedidos">Lista de Pedidos:</string>
     <string name="atualizar_pedidos">Atualizar Pedidos</string>
     <string name="limpar_pedidos">Limpar pedidos</string>
